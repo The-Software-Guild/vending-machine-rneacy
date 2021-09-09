@@ -1,10 +1,11 @@
 package dev.rneacy.dao;
 
 import dev.rneacy.dto.Item;
-import dev.rneacy.exception.NoSuchItemException;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class InventoryDAO implements IInventoryDAO {
     private final Map<Item, Integer> items;
 

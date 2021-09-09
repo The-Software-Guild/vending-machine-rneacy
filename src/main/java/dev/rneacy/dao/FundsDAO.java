@@ -2,9 +2,11 @@ package dev.rneacy.dao;
 
 import dev.rneacy.dto.Change;
 import dev.rneacy.main.Util;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class FundsDAO implements IFundsDAO {
 
     private BigDecimal funds;

@@ -1,8 +1,11 @@
 package dev.rneacy.view;
 
+import org.springframework.stereotype.Component;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Component
 public class UserIO implements IUserIO {
 
     public void print(String message) {

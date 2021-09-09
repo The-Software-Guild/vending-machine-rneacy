@@ -9,19 +9,20 @@ import dev.rneacy.exception.NoItemInventoryException;
 import dev.rneacy.exception.NoSuchItemException;
 import dev.rneacy.exception.VendingException;
 import dev.rneacy.main.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
 public class VendingService {
     private final IFundsDAO funds;
     private final IInventoryDAO inventory;
 
+    @Autowired
     public VendingService(IFundsDAO fundsDAO, IInventoryDAO inventoryDAO) {
         funds = fundsDAO;
         inventory = inventoryDAO;

@@ -8,14 +8,18 @@ import dev.rneacy.exception.NoSuchItemException;
 import dev.rneacy.exception.VendingException;
 import dev.rneacy.service.VendingService;
 import dev.rneacy.view.VendingView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 
+@Component
 public class VendingControl {
-    private VendingService service;
-    private VendingView view;
+    private final VendingService service;
+    private final VendingView view;
 
+    @Autowired
     public VendingControl(VendingService service, VendingView view) {
         this.service = service;
         this.view = view;
