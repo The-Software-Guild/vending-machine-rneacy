@@ -11,7 +11,6 @@ import dev.rneacy.view.VendingView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
 @Component
@@ -30,9 +29,8 @@ public class VendingControl {
 
         try {
             service.loadInventory();
-        } catch (IOException e) {
-            view.showMsg("Vending machine broke.");
-            e.printStackTrace();
+        } catch (VendingException e) {
+            view.showMsg(e.getMessage());
             System.exit(-1);
         }
 
@@ -72,8 +70,8 @@ public class VendingControl {
 
             try {
                 service.saveInventory();
-            } catch (IOException e) {
-                view.showMsg("Vending machine broke.");
+            } catch (VendingException e) {
+                view.showMsg(e.getMessage());
             }
         }
     }

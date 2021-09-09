@@ -61,7 +61,7 @@ public class VendingService {
         return inventory.getItems();
     }
 
-    public void loadInventory() throws IOException {
+    public void loadInventory() throws VendingException {
         try (BufferedReader reader = new BufferedReader(new FileReader("inv.txt"))) {
             String line = reader.readLine();
             String[] split = line.split("¬");
@@ -73,14 +73,20 @@ public class VendingService {
                 inventory.addItem(item, Integer.parseInt(split2[2]));
             }
         }
+        catch(IOException ex) {
+            throw new VendingException("Looks like we've got nothing to sell.");
+        }
     }
 
-    public void saveInventory() throws IOException {
+    public void saveInventory() throws VendingException {
         try (BufferedWriter reader = new BufferedWriter(new FileWriter("inv.txt"))) {
             reader.write("");
             for(Map.Entry<Item, Integer> entry : inventory.getItems().entrySet()) {
                 reader.append(String.format("%s,%s,%s¬", entry.getKey().getName(), entry.getKey().getPrice().toString(), entry.getValue()));
             }
+        }
+        catch(IOException ex) {
+            throw new VendingException("Some of the products have quantum phased back into the machine.");
         }
     }
 }
