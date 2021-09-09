@@ -21,7 +21,7 @@ public class InventoryDAO implements IInventoryDAO {
         return items.get(item);
     }
 
-    public int getItemCount(Item item) {
+    public int getItemCount() {
         return items.size();
     }
 

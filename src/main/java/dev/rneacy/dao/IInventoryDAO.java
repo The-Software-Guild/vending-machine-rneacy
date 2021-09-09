@@ -8,7 +8,7 @@ import java.util.Map;
 public interface IInventoryDAO {
     Map<Item, Integer> getItems(); // item to its count
     int getItemStock(Item item);
-    int getItemCount(Item item);
+    int getItemCount();
     int removeStock(Item item, int amount);
     void addItem(Item item, int stock);
 }

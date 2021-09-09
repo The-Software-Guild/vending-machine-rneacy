@@ -54,4 +54,19 @@ public class Change {
                 nickels.toBigInteger() + " nickels, and " +
                 cents.toBigInteger() + " cents.";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Change change = (Change) o;
+        return Objects.equals(quarters, change.quarters) && Objects.equals(dimes, change.dimes) && Objects.equals(nickels, change.nickels) && Objects.equals(cents, change.cents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(quarters, dimes, nickels, cents);
+    }
 }
