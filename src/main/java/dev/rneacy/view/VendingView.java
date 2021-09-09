@@ -2,12 +2,16 @@ package dev.rneacy.view;
 
 import dev.rneacy.control.VendingAction;
 import dev.rneacy.dto.Item;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
+@Component
 public class VendingView {
-    private final UserIO io = new UserIO();
+    @Autowired
+    private UserIO io;
 
     public VendingAction getMenuInput() {
         io.print("1: Insert money");
