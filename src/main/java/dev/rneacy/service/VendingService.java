@@ -1,5 +1,6 @@
 package dev.rneacy.service;
 
+import dev.rneacy.dao.IAuditDAO;
 import dev.rneacy.dao.IFundsDAO;
 import dev.rneacy.dao.IInventoryDAO;
 import dev.rneacy.dto.Change;
@@ -21,11 +22,13 @@ import java.util.Optional;
 public class VendingService {
     private final IFundsDAO funds;
     private final IInventoryDAO inventory;
+    private final IAuditDAO audit;
 
     @Autowired
-    public VendingService(IFundsDAO fundsDAO, IInventoryDAO inventoryDAO) {
+    public VendingService(IFundsDAO fundsDAO, IInventoryDAO inventoryDAO, IAuditDAO auditDAO) {
         funds = fundsDAO;
         inventory = inventoryDAO;
+        audit = auditDAO;
     }
 
     public BigDecimal getFunds() {
@@ -35,14 +38,16 @@ public class VendingService {
     public BigDecimal addFunds(String amount) throws VendingException {
         BigDecimal amountD = Util.toFormat(amount);
         if(amountD.compareTo(BigDecimal.ZERO) < 1) throw new VendingException("You can't add negative funds.");
+        audit.write(String.format("$%s was put in the machine.", amountD));
         return funds.addFunds(amountD);
     }
 
-    public Change purchase(Item item) throws NoItemInventoryException, InsufficientFundsException {
+    public Change purchase(Item item) throws VendingException {
         if(inventory.getItemStock(item) <= 0) throw new NoItemInventoryException(item);
         if(funds.getFunds().compareTo(item.getPrice()) < 0) throw new InsufficientFundsException(item);
 
         inventory.removeStock(item, 1);
+        audit.write(String.format("%s was purchased.", item.getName()));
         return funds.spendFunds(item.getPrice());
     }
 

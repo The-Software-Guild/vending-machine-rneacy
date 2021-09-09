@@ -58,7 +58,7 @@ public class VendingControl {
                         Change change = service.purchase(toBuy);
                         view.showMsg(String.format("%s\n\nBye.\n", change));
                         requestedExit = true;
-                    } catch (NoSuchItemException | NoItemInventoryException | InsufficientFundsException ex) {
+                    } catch (VendingException ex) {
                         view.showMsg(ex.getMessage());
                     }
 
