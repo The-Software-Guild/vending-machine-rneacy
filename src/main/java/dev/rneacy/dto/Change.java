@@ -10,21 +10,34 @@ import java.util.Objects;
 public class Change {
 
     private BigDecimal quarters, dimes, nickels, cents;
-    private final BigDecimal quarter = Util.toFormat("25");
-    private final BigDecimal dime = Util.toFormat("10");
-    private final BigDecimal nickel = Util.toFormat("5");
+
+    private enum Coin {
+        QUARTER(Util.toFormat("25")),
+        DIME(Util.toFormat("10")),
+        NICKEL(Util.toFormat("5"));
+
+        private BigDecimal value;
+
+        public BigDecimal getValue() {
+            return value;
+        }
+
+        Coin(BigDecimal value) {
+            this.value = value;
+        }
+    }
 
     public Change(BigDecimal funds) {
         BigDecimal total = funds.multiply(Util.toFormat("100"));
 
-        quarters = total.divide(quarter, RoundingMode.HALF_UP);
-        if(quarters.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(quarter.multiply(quarters));
+        quarters = total.divide(Coin.QUARTER.getValue(), RoundingMode.HALF_UP);
+        if(quarters.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(Coin.QUARTER.getValue().multiply(quarters));
 
-        dimes = total.divide(dime, RoundingMode.HALF_UP);
-        if(dimes.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(dime.multiply(dimes));
+        dimes = total.divide(Coin.DIME.getValue(), RoundingMode.HALF_UP);
+        if(dimes.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(Coin.DIME.getValue().multiply(dimes));
 
-        nickels = total.divide(nickel, RoundingMode.HALF_UP);
-        if(nickels.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(nickel.multiply(nickels));
+        nickels = total.divide(Coin.NICKEL.getValue(), RoundingMode.HALF_UP);
+        if(nickels.compareTo(BigDecimal.ONE) >= 0) total = total.subtract(Coin.NICKEL.getValue().multiply(nickels));
 
         cents = total;
     }
